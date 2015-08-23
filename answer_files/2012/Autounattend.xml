@@ -236,6 +236,14 @@
                     <Order>22</Order>
                     <Description>Disable password expiration for vagrant user</Description>
                 </SynchronousCommand>
+                <!-- INSTALL ADDITIONAL BASE TOOLS -->
+                <SynchronousCommand wcm:action="add">
+                    <CommandLine>cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -File a:\chocolatey.ps1</CommandLine>
+                    <Description>Install Chocolatey</Description>
+                    <Order>50</Order>
+                    <RequiresUserInput>true</RequiresUserInput>
+                </SynchronousCommand>
+                <!-- END INSTALL ADDITIONAL BASE TOOLS -->
                 <!-- WITHOUT WINDOWS UPDATES -->
                 <!--
                 <SynchronousCommand wcm:action="add">

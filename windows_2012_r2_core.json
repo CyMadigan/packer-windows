@@ -20,7 +20,8 @@
         "./answer_files/2012_r2_core/Autounattend.xml",
         ".Provisioning/Scripts/microsoft-updates.bat",
         ".Provisioning/Scripts/win-updates.ps1",
-        ".Provisioning/Scripts/openssh.ps1"
+        ".Provisioning/Scripts/openssh.ps1",
+        ".Provisioning/Scripts/chocolatey.ps1"
       ],
       "vmx_data": {
         "RemoteDisplay.vnc.enabled": "false",
@@ -48,7 +49,8 @@
         ".Provisioning/Scripts/microsoft-updates.bat",
         ".Provisioning/Scripts/win-updates.ps1",
         ".Provisioning/Scripts/openssh.ps1",
-        ".Provisioning/Scripts/oracle-cert.cer"
+        ".Provisioning/Scripts/oracle-cert.cer",
+        ".Provisioning/Scripts/chocolatey.ps1"
       ],
       "vboxmanage": [
         [
