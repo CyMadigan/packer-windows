@@ -1,0 +1,135 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrant versions
+#################################
+Vagrant.require_version ">= 1.6.2"
+VAGRANT_API_VERSION = "2"
+
+# Required Configuration
+#################################
+require "yaml"
+if ! File.exists?(File.join(File.dirname(__FILE__), "vagrantfile-local-config.yml")) 
+   puts 'vagrantfile-local-config.yml could not be found!' 
+   exit 1 
+end 
+_config = YAML.load(File.open(File.join(File.dirname(__FILE__), "vagrantfile-local-config.yml"), File::RDONLY).read)
+CONF = _config
+
+puts CONF["ram"]
+puts CONF["cpus"]
+# ENV['VAGRANT_DEFAULT_PROVIDER'] = 'virtualbox' 
+ 
+if ! File.exists?('./Provisioning/Scripts/Provision.ps1') 
+   puts 'Provision.ps1 could not be found!' 
+   #puts "Please run:\n curl -O http://download.microsoft.com/download/E/2/1/E21644B5-2DF2-47C2-91BD-63C560427900/NDP452-KB2901907-x86-x64-AllOS-ENU.exe" 
+   exit 1 
+end 
+
+# override these variables in ~/.vagrant.d/Vagrantfile for your local changes
+$local_username ||= `whoami`.strip
+$local_projects_directory ||= "~/projects/vagrant/"
+$vm_memory ||= CONF["ram"]
+$vm_cpus ||= CONF["cpus"]
+puts "local_username: '#{$local_username}'"
+puts "local_projects_directory: '#{$local_projects_directory}'"
+
+#if ! File.exists?('./Resources/NDP452-KB2901907-x86-x64-AllOS-ENU.exe')
+#  puts '.Net 4.5.2 installer could not be found!'
+#  puts "Please run:\n  wget http://download.microsoft.com/download/E/2/1/E21644B5-2DF2-47C2-91BD-63C560427900/NDP452-KB2901907-x86-x64-AllOS-ENU.exe"
+#  exit 1
+#end
+ 
+#if ! File.exists?('./Resources/Octopus.Tentacle.2.6.0.778-x64.msi')
+#  puts 'Octopus Tentacle installer could not be found!'
+#  puts "Please run:\n  wget http://download.octopusdeploy.com/octopus/Octopus.Tentacle.2.6.0.778-x64.msi"
+#  exit 1
+#end
+
+# General project settings
+#################################
+  module OS
+    def OS.windows?
+      (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM) != nil
+    end
+    
+    def OS.mac?
+      (/darwin/ =~ RUBY_PLATFORM) != nil
+    end
+    
+    def OS.unix?
+      !OS.windows?
+    end
+    
+    def OS.linux?
+      OS.unix? and not OS.mac?
+    end
+  end
+  
+  is_windows_host = "#{OS.windows?}"
+  # puts "is_windows_host: #{OS.windows?}"
+  if OS.windows?
+    puts "Vagrant launched from windows."
+  elsif OS.mac?
+    puts "Vagrant launched from mac."
+  elsif OS.unix?
+    puts "Vagrant launched from unix."
+  elsif OS.linux?
+    puts "Vagrant launched from linux."
+  else
+    puts "Vagrant launched from unknown platform."
+  end
+  
+  # The project name is base for directories, hostname and alike
+  project_name = "Dev"
+
+  # IP Address for the host only network, change it to anything you like
+  # but please keep it within the IPv4 private network range
+  ip_address = "192.168.56.101"
+
+  # MySQL and PostgreSQL password - feel free to change it to something
+  # more secure (Note: Changing this will require you to update the index.php example file)
+  database_password = "root"
+
+Vagrant.configure(VAGRANT_API_VERSION) do |config|
+    config.vm.define "vagrant-windows-7"
+    config.vm.box = "windows_7"
+    config.vm.communicator = "winrm"
+
+    # Admin user name and password
+    config.winrm.username = "vagrant"
+    config.winrm.password = "vagrant"
+
+    config.vm.guest = :windows
+    config.windows.halt_timeout = 15
+
+    config.vm.network :forwarded_port, guest: 3389, host: 3389, id: "rdp", auto_correct: true
+    config.vm.network :forwarded_port, guest: 22, host: 2222, id: "ssh", auto_correct: true
+
+    config.vm.provider :virtualbox do |v, override|
+        #v.gui = true
+        v.customize ["modifyvm", :id, "--memory", 2048]
+        v.customize ["modifyvm", :id, "--cpus", 2]
+        v.customize ["setextradata", "global", "GUI/SuppressMessages", "all" ]
+    end
+
+    config.vm.provider :vmware_fusion do |v, override|
+        #v.gui = true
+        v.vmx["memsize"] = "2048"
+        v.vmx["numvcpus"] = "2"
+        v.vmx["ethernet0.virtualDev"] = "vmxnet3"
+        v.vmx["RemoteDisplay.vnc.enabled"] = "false"
+        v.vmx["RemoteDisplay.vnc.port"] = "5900"
+        v.vmx["scsi0.virtualDev"] = "lsisas1068"
+    end
+
+    config.vm.provider :vmware_workstation do |v, override|
+        #v.gui = true
+        v.vmx["memsize"] = "2048"
+        v.vmx["numvcpus"] = "2"
+        v.vmx["ethernet0.virtualDev"] = "vmxnet3"
+        v.vmx["RemoteDisplay.vnc.enabled"] = "false"
+        v.vmx["RemoteDisplay.vnc.port"] = "5900"
+        v.vmx["scsi0.virtualDev"] = "lsisas1068"
+    end
+end
