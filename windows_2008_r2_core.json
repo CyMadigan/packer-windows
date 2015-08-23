@@ -18,9 +18,9 @@
       "vnc_port_max": 5980,
       "floppy_files": [
         "./answer_files/2008_r2_core/Autounattend.xml",
-        "./scripts/microsoft-updates.bat",
-        "./scripts/win-updates.ps1",
-        "./scripts/openssh.ps1"
+        ".Provisioning/Scripts/microsoft-updates.bat",
+        ".Provisioning/Scripts/win-updates.ps1",
+        ".Provisioning/Scripts/openssh.ps1"
       ],
       "vmx_data": {
         "RemoteDisplay.vnc.enabled": "false",
@@ -45,10 +45,10 @@
       "disk_size": 61440,
       "floppy_files": [
         "./answer_files/2008_r2_core/Autounattend.xml",
-        "./scripts/microsoft-updates.bat",
-        "./scripts/win-updates.ps1",
-        "./scripts/openssh.ps1",
-        "./scripts/oracle-cert.cer"
+        ".Provisioning/Scripts/microsoft-updates.bat",
+        ".Provisioning/Scripts/win-updates.ps1",
+        ".Provisioning/Scripts/openssh.ps1",
+        ".Provisioning/Scripts/oracle-cert.cer"
       ],
       "vboxmanage": [
         [
@@ -72,12 +72,12 @@
       "remote_path": "/tmp/script.bat",
       "execute_command": "{{.Vars}} cmd /c C:/Windows/Temp/script.bat",
       "scripts": [
-        "./scripts/vm-guest-tools.bat",
-        "./scripts/chef.bat",
-        "./scripts/vagrant-ssh.bat",
-        "./scripts/enable-rdp.bat",
-        "./scripts/disable-auto-logon.bat",
-        "./scripts/compact.bat"
+        ".Provisioning/Scripts/vm-guest-tools.bat",
+        ".Provisioning/Scripts/chef.bat",
+        ".Provisioning/Scripts/vagrant-ssh.bat",
+        ".Provisioning/Scripts/enable-rdp.bat",
+        ".Provisioning/Scripts/disable-auto-logon.bat",
+        ".Provisioning/Scripts/compact.bat"
       ]
     },
     {
