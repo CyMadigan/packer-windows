@@ -18,11 +18,11 @@
       "vnc_port_max": 5980,
       "floppy_files": [
         "./answer_files/10/Autounattend.xml",
-        ".Provisioning/Scripts/fixnetwork.ps1",
-        ".Provisioning/Scripts/microsoft-updates.bat",
-        ".Provisioning/Scripts/win-updates.ps1",
-        ".Provisioning/Scripts/openssh.ps1",
-        ".Provisioning/Scripts/chocolatey.ps1"
+        "./Provisioning/Scripts/fixnetwork.ps1",
+        "./Provisioning/Scripts/microsoft-updates.bat",
+        "./Provisioning/Scripts/win-updates.ps1",
+        "./Provisioning/Scripts/openssh.ps1",
+        "./Provisioning/Scripts/chocolatey.ps1"
       ],
       "vmx_data": {
         "RemoteDisplay.vnc.enabled": "false",
@@ -47,12 +47,12 @@
       "disk_size": 61440,
       "floppy_files": [
         "./answer_files/10/Autounattend.xml",
-        ".Provisioning/Scripts/fixnetwork.ps1",
-        ".Provisioning/Scripts/microsoft-updates.bat",
-        ".Provisioning/Scripts/win-updates.ps1",
-        ".Provisioning/Scripts/openssh.ps1",
-        ".Provisioning/Scripts/oracle-cert.cer",
-        ".Provisioning/Scripts/chocolatey.ps1"
+        "./Provisioning/Scripts/fixnetwork.ps1",
+        "./Provisioning/Scripts/microsoft-updates.bat",
+        "./Provisioning/Scripts/win-updates.ps1",
+        "./Provisioning/Scripts/openssh.ps1",
+        "./Provisioning/Scripts/oracle-cert.cer",
+        "./Provisioning/Scripts/chocolatey.ps1"
       ],
       "vboxmanage": [
         [
@@ -76,10 +76,10 @@
       "remote_path": "/tmp/script.bat",
       "execute_command": "{{.Vars}} cmd /c C:/Windows/Temp/script.bat",
       "scripts": [
-        ".Provisioning/Scripts/vm-guest-tools.bat",
-        ".Provisioning/Scripts/vagrant-ssh.bat",
-        ".Provisioning/Scripts/enable-rdp.bat",
-        ".Provisioning/Scripts/compact.bat"
+        "./Provisioning/Scripts/vm-guest-tools.bat",
+        "./Provisioning/Scripts/vagrant-ssh.bat",
+        "./Provisioning/Scripts/enable-rdp.bat",
+        "./Provisioning/Scripts/compact.bat"
       ]
     }
   ],
